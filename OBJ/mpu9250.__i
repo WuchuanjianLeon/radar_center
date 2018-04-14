@@ -1,5 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CORE -I..\MAIN -I..\STM32F10x_StdPeriph_Driver\inc 
--I d:\Keil\ARM\RV31\INC 
--I d:\Keil\ARM\CMSIS\Include 
--I d:\Keil\ARM\Inc\ST\STM32F10x 
--DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\mpu9250.o" --omf_browse "..\OBJ\mpu9250.crf" --depend "..\OBJ\mpu9250.d" "..\MAIN\mpu9250.c"

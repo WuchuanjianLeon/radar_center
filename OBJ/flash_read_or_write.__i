@@ -1,5 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CORE -I..\MAIN -I..\STM32F10x_StdPeriph_Driver\inc 
--I C:\Keil\ARM\RV31\INC 
--I C:\Keil\ARM\CMSIS\Include 
--I C:\Keil\ARM\Inc\ST\STM32F10x 
--DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\flash_read_or_write.o" --omf_browse "..\OBJ\flash_read_or_write.crf" --depend "..\OBJ\flash_read_or_write.d" "..\MAIN\flash_read_or_write.c"

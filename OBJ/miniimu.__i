@@ -1,5 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\CORE -I..\MAIN -I..\STM32F10x_StdPeriph_Driver\inc 
--I D:\Keil\ARM\RV31\INC 
--I D:\Keil\ARM\CMSIS\Include 
--I D:\Keil\ARM\Inc\ST\STM32F10x 
--DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\miniimu.o" --omf_browse "..\OBJ\miniimu.crf" --depend "..\OBJ\miniimu.d" "..\MAIN\miniIMU.c"
