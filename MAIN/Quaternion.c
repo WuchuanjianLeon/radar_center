@@ -39,11 +39,11 @@ void Quaternion_FromEuler(float *q, float *rpy)
 	float sThe2, cThe2; // sin(theta/2) and cos(theta/2)
 	float sPsi2, cPsi2; // sin(psi/2) and cos(psi/2)
 	// calculate sines and cosines
-	
+
 	FastSinCos(0.5f * rpy[0], &sPhi2, &cPhi2);
 	FastSinCos(0.5f * rpy[1], &sThe2, &cThe2);
 	FastSinCos(0.5f * rpy[2], &sPsi2, &cPsi2);
-	
+
 	// compute the quaternion elements
 	q[0] = cPsi2 * cThe2 * cPhi2 + sPsi2 * sThe2 * sPhi2;
 	q[1] = cPsi2 * cThe2 * sPhi2 - sPsi2 * sThe2 * cPhi2;
@@ -78,10 +78,12 @@ void Quaternion_ToEuler(float *q, float* rpy)
 		rpy[1] = FastAsin(-R[0][2]);
 	//yaw
 	rpy[2] = FastAtan2(R[0][1], R[0][0]);
-	if (rpy[2] < 0.0f){
+	if (rpy[2] < 0.0f)
+	{
 		rpy[2] += _2_PI;
 	}
-	if (rpy[2] > _2_PI){
+	if (rpy[2] > _2_PI)
+	{
 		rpy[2] = 0.0f;
 	}
 	//rpy[0] = RADTODEG(rpy[0]);
@@ -95,29 +97,34 @@ void Quaternion_FromRotationMatrix(float *R, float *Q)
 	// calculate the trace of the matrix
 	float trace = R[0] + R[4] + R[8];
 	float s;
-	if(trace > 0){
+	if(trace > 0)
+	{
 		s = 0.5f * FastSqrt(trace + 1.0f);
 		Q[0] = 0.25f / s;
 		Q[1] = (R[7] - R[5]) * s;
 		Q[2] = (R[2] - R[6]) * s;
 		Q[3] = (R[3] - R[1]) * s;
 	}
-	else{
-		if(R[0] > R[4] && R[0] > R[8] ){
+	else
+	{
+		if(R[0] > R[4] && R[0] > R[8] )
+		{
 			s = 0.5f * FastSqrtI(1.0f + R[0] - R[4] - R[8]);
 			Q[0] = (R[7] - R[5]) * s;
 			Q[1] = 0.25f / s;
 			Q[2] = (R[1] + R[3]) * s;
 			Q[3] = (R[2] + R[6]) * s;
 		}
-		else if(R[4] > R[8]) {
+		else if(R[4] > R[8])
+		{
 			s = 0.5f * FastSqrtI(1.0f + R[4] - R[0] - R[8]);
 			Q[0] = (R[2] - R[6]) * s;
 			Q[1] = (R[1] + R[3]) * s;
 			Q[2] = 0.25f / s;
 			Q[3] = (R[5] + R[7]) * s;
 		}
-		else{
+		else
+		{
 			s = 0.5f * FastSqrtI(1.0f + R[8] - R[0] - R[4]);
 			Q[0] = (R[3] - R[1]) * s;
 			Q[1] = (R[2] + R[6]) * s;
@@ -135,14 +142,16 @@ void Quaternion_FromRotationMatrix(float *R, float *Q)
 	fq0sq = 0.25f * (1.0f + R[0] + R[4] + R[8]);
 	Q[0] = (float)FastSqrt(FastAbs(fq0sq));
 	// normal case when q0 is not small meaning rotation angle not near 180 deg
-	if (Q[0] > SMALLQ0){
+	if (Q[0] > SMALLQ0)
+	{
 		// calculate q1 to q3
 		recip4q0 = 0.25F / Q[0];
 		Q[1] = recip4q0 * (R[5] - R[7]);
 		Q[2] = recip4q0 * (R[6] - R[2]);
 		Q[3] = recip4q0 * (R[1] - R[3]);
 	}
-	else{
+	else
+	{
 		// special case of near 180 deg corresponds to nearly symmetric matrix
 		// which is not numerically well conditioned for division by small q0
 		// instead get absolute values of q1 to q3 from leading diagonal
@@ -150,22 +159,27 @@ void Quaternion_FromRotationMatrix(float *R, float *Q)
 		Q[2] = FastSqrt(FastAbs(0.5f * (1.0f + R[4]) - fq0sq));
 		Q[3] = FastSqrt(FastAbs(0.5f * (1.0f + R[8]) - fq0sq));
 		// first assume q1 is positive and ensure q2 and q3 are consistent with q1
-		if ((R[1] + R[3]) < 0.0f){
+		if ((R[1] + R[3]) < 0.0f)
+		{
 			// q1*q2 < 0 so q2 is negative
 			Q[2] = -Q[2];
-			if ((R[5] + R[7]) > 0.0f){
+			if ((R[5] + R[7]) > 0.0f)
+			{
 				// q1*q2 < 0 and q2*q3 > 0 so q3 is also both negative
 				Q[3] = -Q[3];
 			}
 		}
-		else if ((R[1] + R[3]) > 0.0f){
-			if ((R[5] + R[7]) < 0.0f){
+		else if ((R[1] + R[3]) > 0.0f)
+		{
+			if ((R[5] + R[7]) < 0.0f)
+			{
 				// q1*q2 > 0 and q2*q3 < 0 so q3 is negative
 				Q[3] = -Q[3];
 			}
 		}
 		// negate the vector components if q1 should be negative
-		if ((R[5] - R[7]) < 0.0f){
+		if ((R[5] - R[7]) < 0.0f)
+		{
 			Q[1] = -Q[1];
 			Q[2] = -Q[2];
 			Q[3] = -Q[3];
@@ -214,7 +228,8 @@ void Quaternion_RungeKutta4(float *q, float *w, float dt, int normalize)
 	Quaternion_Scalar(tmpq, tmpq, dt / 6.0f);
 	Quaternion_Add(q, q, tmpq);
 
-	if (normalize){
+	if (normalize)
+	{
 		Quaternion_Normalize(q);
 	}
 }
@@ -228,8 +243,12 @@ void Quaternion_From6AxisData(float* q, float *accel, float *mag)
 	float R[9];
 	// place the un-normalized gravity and geomagnetic vectors into
 	// the rotation matrix z and x axes
-	R[2] = accel[0]; R[5] = accel[1]; R[8] = accel[2];
-	R[0] = mag[0]; R[3] = mag[1]; R[6] = mag[2];
+	R[2] = accel[0];
+	R[5] = accel[1];
+	R[8] = accel[2];
+	R[0] = mag[0];
+	R[3] = mag[1];
+	R[6] = mag[2];
 	// set y vector to vector product of z and x vectors
 	R[1] = R[5] * R[6] - R[8] * R[3];
 	R[4] = R[8] * R[0] - R[2] * R[6];
@@ -245,11 +264,17 @@ void Quaternion_From6AxisData(float* q, float *accel, float *mag)
 	normy = FastSqrtI(R[1] * R[1] + R[4] * R[4] + R[7] * R[7]);
 	// normalize the rotation matrix
 	// normalize x axis
-	R[0] *= normx; R[3] *= normx; R[6] *= normx;
+	R[0] *= normx;
+	R[3] *= normx;
+	R[6] *= normx;
 	// normalize y axis
-	R[1] *= normy; R[4] *= normy; R[7] *= normy;
+	R[1] *= normy;
+	R[4] *= normy;
+	R[7] *= normy;
 	// normalize z axis
-	R[2] *= norma; R[5] *= norma; R[8] *= norma;
-	
+	R[2] *= norma;
+	R[5] *= norma;
+	R[8] *= norma;
+
 	Quaternion_FromRotationMatrix(R, q);
 }

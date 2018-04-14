@@ -57,7 +57,7 @@ float FastLn(float x);
 
 #define LOG2E_MINUS1 (0.44269504088896340735992468100189f)
 //
-#define FLT_EPSILON          1.1920928955078125E-07F 
+#define FLT_EPSILON          1.1920928955078125E-07F
 #define FLT_MAX              3.4028234663852886E+38F
 //
 float FastPow(float x,float y);
@@ -116,15 +116,25 @@ float FastSin(float x);
 float FastCos(float x);
 void FastSinCos(float x, float *sinVal, float *cosVal);
 
-__inline float FastAbs(float x){
-	union { unsigned int i; float f;} y;
+__inline float FastAbs(float x)
+{
+	union
+	{
+		unsigned int i;
+		float f;
+	} y;
 	y.f = x;
 	y.i = y.i & 0x7FFFFFFF;
 	return (float)y.f;
 }
 
-__inline double FastAbsD(double x){
-	union { unsigned __int64 i; double d;} y;
+__inline double FastAbsD(double x)
+{
+	union
+	{
+		unsigned __int64 i;
+		double d;
+	} y;
 	y.d = x;
 	y.i = y.i & 0x7FFFFFFFFFFFFFFFLL;
 	return (double)y.d;

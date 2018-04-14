@@ -10,12 +10,12 @@
 // 定义MPU9250内部地址
 /*****************************************************************/
 #define	SMPLRT_DIV		                    0x19	//陀螺仪采样率
-#define	CONFIG			                    0x1A	
-#define	GYRO_CONFIG		                    0x1B	
-#define	ACCEL_CONFIG	                    0x1C	
-#define	ACCEL_CONFIG_2                      0x1D 
-#define	LP_ACCEL_ODR                        0x1E 
-#define	WOM_THR                             0x1F 
+#define	CONFIG			                    0x1A
+#define	GYRO_CONFIG		                    0x1B
+#define	ACCEL_CONFIG	                    0x1C
+#define	ACCEL_CONFIG_2                      0x1D
+#define	LP_ACCEL_ODR                        0x1E
+#define	WOM_THR                             0x1F
 
 #define INT_PIN_CFG                         0x37 //中断配置
 #define INT_ENABLE                          0x38 //运动中断使能
@@ -26,9 +26,9 @@
 #define I2C_MST_CTRL                        0x24
 #define I2C_MST_DELAY_CTRL                  0x67
 //--------------------i2c slv0-------------------------------//
-#define I2C_SLV0_ADDR                       0x25  
+#define I2C_SLV0_ADDR                       0x25
 #define I2C_SLV0_REG                        0x26
-#define I2C_SLV0_CTRL                       0x27 
+#define I2C_SLV0_CTRL                       0x27
 #define I2C_SLV0_DO                         0x63 //output reg
 //--------------------AK8963 reg addr------------------------//
 #define MPU9250_AK8963_ADDR                 0x0C  //AKM addr
@@ -58,12 +58,12 @@
 #define	TEMP_OUT_L		0x42
 
 #define	GYRO_XOUT_H		0x43
-#define	GYRO_XOUT_L		0x44	
+#define	GYRO_XOUT_L		0x44
 #define	GYRO_YOUT_H		0x45
 #define	GYRO_YOUT_L		0x46
 #define	GYRO_ZOUT_H		0x47
 #define	GYRO_ZOUT_L		0x48
-		
+
 #define MAG_XOUT_L		0x03
 #define MAG_XOUT_H		0x04
 #define MAG_YOUT_L		0x05
@@ -83,19 +83,21 @@
 
 
 
-typedef struct{
+typedef struct
+{
 	int16_t Accel[3];//Accel X,Y,Z
 	int16_t Gyro[3];//Gyro X,Y,Z
-	int16_t Mag[3];	//Mag X,Y,Z	
-}MPU_value;
+	int16_t Mag[3];	//Mag X,Y,Z
+} MPU_value;
 
-typedef struct{
+typedef struct
+{
 	float Accel[3];//Accel X,Y,Z
 	float Gyro[3];//Gyro X,Y,Z
-	float Mag[3];	//Mag X,Y,Z	
+	float Mag[3];	//Mag X,Y,Z
 	u8 flag ;
 	u8 state;
-}MPU_value_f;
+} MPU_value_f;
 
 extern MPU_value mpu_value;          //9轴数据
 extern MPU_value_f mpu_value_f;          //9轴数据

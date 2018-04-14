@@ -3,7 +3,7 @@
 #include "stm32f10x.h"
 
 #define MATRIX_SIZE 7
-extern double m_result[MATRIX_SIZE];	
+extern double m_result[MATRIX_SIZE];
 
 u8 acc_calc(void);
 void ResetMatrix(void);

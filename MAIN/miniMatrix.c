@@ -35,7 +35,8 @@ void Matrix_Zero(float *A, unsigned short numRows, unsigned short numCols)
 	unsigned int blkCnt = numSamples >> 2u;
 
 	//cortex-m3's speed optimization
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		(*pIn++) = 0.0f;
 		(*pIn++) = 0.0f;
 		(*pIn++) = 0.0f;
@@ -44,15 +45,16 @@ void Matrix_Zero(float *A, unsigned short numRows, unsigned short numCols)
 	}
 	blkCnt = numSamples & 0x03u;
 
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		(*pIn++) = 0.0f;
 		blkCnt--;
 	}
 }
 
 void Matrix_Copy(float *pSrc, unsigned short numRows, unsigned short numCols, float *pDst)
-{	
-	unsigned int numSamples; // total number of elements in the matrix 
+{
+	unsigned int numSamples; // total number of elements in the matrix
 	unsigned int blkCnt; // loop counters
 
 	float in1, in2, in3, in4;
@@ -62,9 +64,10 @@ void Matrix_Copy(float *pSrc, unsigned short numRows, unsigned short numCols, fl
 
 	// Loop unrolling
 	blkCnt = numSamples >> 2u;
-	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.
 	// a second loop below computes the remaining 1 to 3 samples.
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C = A
 		// Copy and then store the results in the destination buffer
 		in1 = *pSrc++;
@@ -81,11 +84,12 @@ void Matrix_Copy(float *pSrc, unsigned short numRows, unsigned short numCols, fl
 		blkCnt--;
 	}
 
-	// If the numSamples is not a multiple of 4, compute any remaining output samples here.    
+	// If the numSamples is not a multiple of 4, compute any remaining output samples here.
 	// No loop unrolling is used.
 	blkCnt = numSamples & 0x3u;
 
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C = A
 		// Copy and then store the results in the destination buffer
 		*pDst++ = *pSrc++;
@@ -97,12 +101,12 @@ void Matrix_Copy(float *pSrc, unsigned short numRows, unsigned short numCols, fl
 
 int Maxtrix_Add(float *pSrcA, unsigned short numRows, unsigned short numCols, float *pSrcB, float *pDst)
 {
-	float *pIn1 = pSrcA; // input data matrix pointer A 
-	float *pIn2 = pSrcB; // input data matrix pointer B 
-	float *pOut = pDst; // output data matrix pointer  
+	float *pIn1 = pSrcA; // input data matrix pointer A
+	float *pIn2 = pSrcB; // input data matrix pointer B
+	float *pOut = pDst; // output data matrix pointer
 	float inA1, inA2, inB1, inB2, out1, out2; // temporary variables
 
-	unsigned int numSamples; // total number of elements in the matrix 
+	unsigned int numSamples; // total number of elements in the matrix
 	unsigned int blkCnt; // loop counters
 	int status; // status of matrix addition
 
@@ -112,9 +116,10 @@ int Maxtrix_Add(float *pSrcA, unsigned short numRows, unsigned short numCols, fl
 	// Loop unrolling
 	blkCnt = numSamples >> 2u;
 
-	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.
 	// a second loop below computes the remaining 1 to 3 samples.
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C(m,n) = A(m,n) + B(m,n)
 		// Add and then store the results in the destination buffer.
 		// Read values from source A
@@ -172,12 +177,13 @@ int Maxtrix_Add(float *pSrcA, unsigned short numRows, unsigned short numCols, fl
 		blkCnt--;
 	}
 
-	// If the numSamples is not a multiple of 4, compute any remaining output samples here.    
+	// If the numSamples is not a multiple of 4, compute any remaining output samples here.
 	// No loop unrolling is used.
 	blkCnt = numSamples & 0x3u;
 
 
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C(m,n) = A(m,n) + B(m,n)
 		// Add and then store the results in the destination buffer.
 		*pOut++ = (*pIn1++) + (*pIn2++);
@@ -197,11 +203,11 @@ int Maxtrix_Sub(float *pSrcA, unsigned short numRows, unsigned short numCols, fl
 {
 	float *pIn1 = pSrcA;                // input data matrix pointer A
 	float *pIn2 = pSrcB;                // input data matrix pointer B
-	float *pOut = pDst;                 // output data matrix pointer 
+	float *pOut = pDst;                 // output data matrix pointer
 
 	float inA1, inA2, inB1, inB2, out1, out2;  // temporary variables
 
-	unsigned int numSamples;                           // total number of elements in the matrix 
+	unsigned int numSamples;                           // total number of elements in the matrix
 	unsigned int blkCnt;                               // loop counters
 	int status;                             // status of matrix subtraction
 
@@ -213,9 +219,10 @@ int Maxtrix_Sub(float *pSrcA, unsigned short numRows, unsigned short numCols, fl
 	// Loop Unrolling
 	blkCnt = numSamples >> 2u;
 
-	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+	// First part of the processing with loop unrolling.  Compute 4 outputs at a time.
 	// a second loop below computes the remaining 1 to 3 samples.
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C(m,n) = A(m,n) - B(m,n)
 		// Subtract and then store the results in the destination buffer.
 		// Read values from source A
@@ -273,11 +280,12 @@ int Maxtrix_Sub(float *pSrcA, unsigned short numRows, unsigned short numCols, fl
 		blkCnt--;
 	}
 
-	// If the numSamples is not a multiple of 4, compute any remaining output samples here.    
+	// If the numSamples is not a multiple of 4, compute any remaining output samples here.
 	// No loop unrolling is used.
 	blkCnt = numSamples & 0x3u;
 
-	while(blkCnt > 0u){
+	while(blkCnt > 0u)
+	{
 		// C(m,n) = A(m,n) - B(m,n)
 		// Subtract and then store the results in the destination buffer.
 		*pOut++ = (*pIn1++) - (*pIn2++);
@@ -297,7 +305,7 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 {
 	float *pIn1 = pSrcA; // input data matrix pointer A
 	float *pIn2 = pSrcB; // input data matrix pointer B
-	float *pInA = pSrcA; // input data matrix pointer A 
+	float *pInA = pSrcA; // input data matrix pointer A
 	float *pOut = pDst; // output data matrix pointer
 	float *px; // Temporary output data matrix pointer
 	float sum; // Accumulator
@@ -310,21 +318,23 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 
 	// The following loop performs the dot-product of each row in pSrcA with each column in pSrcB
 	// row loop
-	do{
+	do
+	{
 		// Output pointer is set to starting address of the row being processed
 		px = pOut + i;
 
 		// For every row wise process, the column loop counter is to be initiated
 		col = numColsB;
 
-		// For every row wise process, the pIn2 pointer is set    
+		// For every row wise process, the pIn2 pointer is set
 		// to the starting address of the pSrcB data
 		pIn2 = pSrcB;
 
 		j = 0u;
 
 		// column loop
-		do{
+		do
+		{
 			// Set the variable sum, that acts as accumulator, to zero
 			sum = 0.0f;
 
@@ -334,8 +344,9 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 			// Apply loop unrolling and compute 4 MACs simultaneously.
 			colCnt = numColsA >> 2u;
 
-			// matrix multiplication       
-			while(colCnt > 0u){
+			// matrix multiplication
+			while(colCnt > 0u)
+			{
 				// c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n)
 				in3 = *pIn2;
 				pIn2 += numColsB;
@@ -360,11 +371,12 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 				colCnt--;
 			}
 
-			// If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.    
+			// If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.
 			// No loop unrolling is used.
 			colCnt = numColsA & 0x3u;
 
-			while(colCnt > 0u){
+			while(colCnt > 0u)
+			{
 				// c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n)
 				sum += *pIn1++ * (*pIn2);
 				pIn2 += numColsB;
@@ -383,7 +395,8 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 			// Decrement the column loop counter
 			col--;
 
-		} while(col > 0u);
+		}
+		while(col > 0u);
 
 		// Update the pointer pInA to point to the  starting address of the next row
 		i = i + numColsB;
@@ -392,7 +405,8 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 		// Decrement the row loop counter
 		row--;
 
-	} while(row > 0u);
+	}
+	while(row > 0u);
 	// Set status as ARM_MATH_SUCCESS
 	status = 0;
 
@@ -400,16 +414,19 @@ int Matrix_Multiply(float* pSrcA, unsigned short numRowsA, unsigned short numCol
 	return (status);
 }
 
-void Matrix_Multiply_With_Transpose(float *A, unsigned short nrows, unsigned short ncols, float *B, unsigned short mrows, float *C) 
+void Matrix_Multiply_With_Transpose(float *A, unsigned short nrows, unsigned short ncols, float *B, unsigned short mrows, float *C)
 {
 	int i,j,k;
 	float *pA;
 	float *pB;
 
-	for (i = 0; i < nrows; A += ncols, i++){
-		for (pB = B, j = 0; j < mrows; C++, j++){
-			for (pA = A, *C = 0.0, k  = 0; k < ncols; k++){
-				*C += *pA++ * *pB++;
+	for (i = 0; i < nrows; A += ncols, i++)
+	{
+		for (pB = B, j = 0; j < mrows; C++, j++)
+		{
+			for (pA = A, *C = 0.0, k  = 0; k < ncols; k++)
+			{
+				*C += *pA++ **pB++;
 			}
 		}
 	}
@@ -423,11 +440,13 @@ void Maxtrix_Transpose(float *pSrc, unsigned short nRows, unsigned short nCols, 
 
 	unsigned short blkCnt, i = 0u, row = nRows;
 
-	do{
+	do
+	{
 		blkCnt = nCols >> 2;
 		px = pOut + i;
 
-		while(blkCnt > 0u){
+		while(blkCnt > 0u)
+		{
 			*px = *pIn++;
 			px += nRows;
 
@@ -443,7 +462,8 @@ void Maxtrix_Transpose(float *pSrc, unsigned short nRows, unsigned short nCols, 
 			blkCnt--;
 		}
 		blkCnt = nCols & 0x03u;
-		while(blkCnt > 0u){
+		while(blkCnt > 0u)
+		{
 			*px = *pIn++;
 			px += nRows;
 			blkCnt--;
@@ -451,7 +471,8 @@ void Maxtrix_Transpose(float *pSrc, unsigned short nRows, unsigned short nCols, 
 
 		i++;
 		row--;
-	} while(row > 0u);
+	}
+	while(row > 0u);
 }
 
 int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
@@ -463,7 +484,7 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 	float *pPivotRowIn, *pPRT_in, *pPivotRowDst, *pPRT_pDst; // Temporary input and output data matrix pointer
 	float maxC; // maximum value in the column
 
-	float Xchg, in = 0.0f, in1; // Temporary input values 
+	float Xchg, in = 0.0f, in1; // Temporary input values
 	unsigned int i, rowCnt, flag = 0u, j, loopCnt, k, l; // loop counters
 	int status; // status of matrix inverse
 
@@ -474,10 +495,12 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 	rowCnt = n;
 
 	// Making the destination matrix as identity matrix
-	while(rowCnt > 0u){
+	while(rowCnt > 0u)
+	{
 		// Writing all zeroes in lower triangle of the destination matrix
 		j = n - rowCnt;
-		while(j > 0u){
+		while(j > 0u)
+		{
 			*pOutT1++ = 0.0f;
 			j--;
 		}
@@ -487,7 +510,8 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 
 		// Writing all zeroes in upper triangle of the destination matrix
 		j = rowCnt - 1u;
-		while(j > 0u){
+		while(j > 0u)
+		{
 			*pOutT1++ = 0.0f;
 			j--;
 		}
@@ -496,25 +520,26 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 		rowCnt--;
 	}
 
-	// Loop over the number of columns of the input matrix.    
+	// Loop over the number of columns of the input matrix.
 	// All the elements in each column are processed by the row operations
 	loopCnt = n;
 
 	// Index modifier to navigate through the columns
 	l = 0u;
 
-	while(loopCnt > 0u){
-		// Check if the pivot element is zero..    
-		// If it is zero then interchange the row with non zero row below.    
-		// If there is no non zero element to replace in the rows below,    
+	while(loopCnt > 0u)
+	{
+		// Check if the pivot element is zero..
+		// If it is zero then interchange the row with non zero row below.
+		// If there is no non zero element to replace in the rows below,
 		// then the matrix is Singular.
 
-		// Working pointer for the input matrix that points    
-		// to the pivot element of the particular row 
+		// Working pointer for the input matrix that points
+		// to the pivot element of the particular row
 		pInT1 = pIn + (l * n);
 
-		// Working pointer for the destination matrix that points    
-		// to the pivot element of the particular row 
+		// Working pointer for the destination matrix that points
+		// to the pivot element of the particular row
 		pOutT1 = pOut + (l * n);
 
 		// Temporary variable to hold the pivot value
@@ -522,40 +547,46 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 
 		// Grab the most significant value from column l
 		maxC = 0;
-		for (i = l; i < n; i++){
+		for (i = l; i < n; i++)
+		{
 			maxC = *pInT1 > 0 ? (*pInT1 > maxC ? *pInT1 : maxC) : (-*pInT1 > maxC ? -*pInT1 : maxC);
 			pInT1 += n;
 		}
 
 		// Update the status if the matrix is singular
-		if(maxC == 0.0f){
+		if(maxC == 0.0f)
+		{
 			return -1;
 		}
 
-		// Restore pInT1 
+		// Restore pInT1
 		pInT1 = pIn;
 
 		// Destination pointer modifier
 		k = 1u;
 
 		// Check if the pivot element is the most significant of the column
-		if( (in > 0.0f ? in : -in) != maxC){
+		if( (in > 0.0f ? in : -in) != maxC)
+		{
 			// Loop over the number rows present below
 			i = n - (l + 1u);
 
-			while(i > 0u){
+			while(i > 0u)
+			{
 				// Update the input and destination pointers
 				pInT2 = pInT1 + (n * l);
 				pOutT2 = pOutT1 + (n * k);
 
-				// Look for the most significant element to    
+				// Look for the most significant element to
 				// replace in the rows below
-				if((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC){
-					// Loop over number of columns    
+				if((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC)
+				{
+					// Loop over number of columns
 					// to the right of the pilot element
 					j = n - l;
 
-					while(j > 0u){
+					while(j > 0u)
+					{
 						// Exchange the row elements of the input matrix
 						Xchg = *pInT2;
 						*pInT2++ = *pInT1;
@@ -568,7 +599,8 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 					// Loop over number of columns of the destination matrix
 					j = n;
 
-					while(j > 0u){
+					while(j > 0u)
+					{
 						// Exchange the row elements of the destination matrix
 						Xchg = *pOutT2;
 						*pOutT2++ = *pOutT1;
@@ -594,7 +626,8 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 		}
 
 		// Update the status if the matrix is singular
-		if((flag != 1u) && (in == 0.0f)){
+		if((flag != 1u) && (in == 0.0f))
+		{
 			return -1;
 		}
 
@@ -609,12 +642,13 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 		// Pivot element of the row
 		in = *pPivotRowIn;
 
-		// Loop over number of columns    
+		// Loop over number of columns
 		// to the right of the pilot element
 		j = (n - l);
 
-		while(j > 0u){
-			// Divide each element of the row of the input matrix    
+		while(j > 0u)
+		{
+			// Divide each element of the row of the input matrix
 			// by the pivot element
 			in1 = *pInT1;
 			*pInT1++ = in1 / in;
@@ -626,8 +660,9 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 		// Loop over number of columns of the destination matrix
 		j = n;
 
-		while(j > 0u){
-			// Divide each element of the row of the destination matrix    
+		while(j > 0u)
+		{
+			// Divide each element of the row of the destination matrix
 			// by the pivot element
 			in1 = *pInT2;
 			*pInT2++ = in1 / in;
@@ -636,7 +671,7 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 			j--;
 		}
 
-		// Replace the rows with the sum of that row and a multiple of row i    
+		// Replace the rows with the sum of that row and a multiple of row i
 		// so that each new element in column i above row i is zero.*/
 
 		// Temporary pointers for input and destination matrices
@@ -650,16 +685,19 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 		//  to be replaced by the sum of that row and a multiple of row i
 		k = n;
 
-		while(k > 0u){
+		while(k > 0u)
+		{
 			// Check for the pivot element
-			if(i == l){
-				// If the processing element is the pivot element,    
+			if(i == l)
+			{
+				// If the processing element is the pivot element,
 				// only the columns to the right are to be processed
 				pInT1 += n - l;
 
 				pInT2 += n;
 			}
-			else{
+			else
+			{
 				// Element of the reference row
 				in = *pInT1;
 
@@ -667,29 +705,31 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 				pPRT_in = pPivotRowIn;
 				pPRT_pDst = pPivotRowDst;
 
-				// Loop over the number of columns to the right of the pivot element,    
+				// Loop over the number of columns to the right of the pivot element,
 				// to replace the elements in the input matrix
 				j = (n - l);
 
-				while(j > 0u){
-					// Replace the element by the sum of that row    
-					// and a multiple of the reference row 
+				while(j > 0u)
+				{
+					// Replace the element by the sum of that row
+					// and a multiple of the reference row
 					in1 = *pInT1;
-					*pInT1++ = in1 - (in * *pPRT_in++);
+					*pInT1++ = in1 - (in **pPRT_in++);
 
 					// Decrement the loop counter
 					j--;
 				}
 
-				// Loop over the number of columns to    
+				// Loop over the number of columns to
 				// replace the elements in the destination matrix
 				j = n;
 
-				while(j > 0u){
-					// Replace the element by the sum of that row    
-					// and a multiple of the reference row 
+				while(j > 0u)
+				{
+					// Replace the element by the sum of that row
+					// and a multiple of the reference row
 					in1 = *pInT2;
-					*pInT2++ = in1 - (in * *pPRT_pDst++);
+					*pInT2++ = in1 - (in **pPRT_pDst++);
 
 					// Decrement the loop counter
 					j--;
@@ -720,7 +760,8 @@ int Matrix_Inverse(float * pSrc, unsigned short n, float* pDst)
 	// Set status as SUCCESS
 	status = 0;
 
-	if((flag != 1u) && (in == 0.0f)){
+	if((flag != 1u) && (in == 0.0f))
+	{
 		status = -1;
 	}
 

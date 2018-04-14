@@ -58,7 +58,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //} arm_matrix_instance_f32;
 
 
-typedef struct SRCKF_FILTER_T{
+typedef struct SRCKF_FILTER_T
+{
 	//weights
 	float32_t W;
 	float32_t SW;
@@ -141,9 +142,9 @@ typedef struct SRCKF_FILTER_T{
 	//measurement vector
 	arm_matrix_instance_f32 Y;
 	arm_matrix_instance_f32 tmpY;
-	
+
 	float32_t declination;
-}SRCKF_Filter;
+} SRCKF_Filter;
 
 void SRCKF_New(SRCKF_Filter* srckf);
 void SRCKF_Init(SRCKF_Filter* srckf, float32_t *accel, float32_t *mag);

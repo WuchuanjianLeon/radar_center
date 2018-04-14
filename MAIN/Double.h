@@ -44,7 +44,7 @@ __inline Double intToDouble(int A)
 
 	B.hi = (float)A;
 	B.lo = 0.0f;
-	
+
 	return B;
 }
 //
@@ -54,7 +54,7 @@ __inline Double floatToDouble(float A)
 
 	B.hi = A;
 	B.lo = 0.0f;
-	
+
 	return B;
 }
 //
@@ -64,7 +64,7 @@ __inline Double doubleToDouble(double A)
 
 	B.hi = (float)A;
 	B.lo = (float)(A - (double)B.hi);
-	
+
 	return B;
 }
 //transmit my own Double to double precision float

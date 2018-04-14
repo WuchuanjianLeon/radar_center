@@ -42,11 +42,11 @@ void Ckf_main(void)
 	{
 #ifdef USE_SRCKF
 		//Create a new EKF object;
-		SRCKF_New(&srckf);			
+		SRCKF_New(&srckf);
 #endif
 
 	}
-    Get_Ms(&ulNowTime);	
+	Get_Ms(&ulNowTime);
 	mpu_9250_read();
 	fRealGyro[0] = -mpu_value_f.Gyro[1]; //DEGTORAD(s16Gyro[0]) * 0.06097560975609756097560975609756f;
 	fRealGyro[1] = -mpu_value_f.Gyro[0];//DEGTORAD(s16Gyro[1]) * 0.06097560975609756097560975609756f;
@@ -54,16 +54,16 @@ void Ckf_main(void)
 
 	fRealGyro[0] = update_second_order_low_pass(&gro_fiter_x,mpu_value_f.Gyro[0]);
 	fRealGyro[1] = update_second_order_low_pass(&gro_fiter_y,mpu_value_f.Gyro[1]);
-	fRealGyro[2] = update_second_order_low_pass(&gro_fiter_z,mpu_value_f.Gyro[2]);	
+	fRealGyro[2] = update_second_order_low_pass(&gro_fiter_z,mpu_value_f.Gyro[2]);
 
-    //if(fabs(fRealGyro[0])<10*3.14159/180) fRealGyro[0]=0;
+	//if(fabs(fRealGyro[0])<10*3.14159/180) fRealGyro[0]=0;
 	//if(fabs(fRealGyro[1])<10*3.14159/180) fRealGyro[1]=0;
 	//if(fabs(fRealGyro[2])<10*3.14159/180) fRealGyro[2]=0;
-		if(!u32KFState)
+	if(!u32KFState)
 	{
-			int_second_order_low_pass(&acc_fiter_x,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[0]);
-	    int_second_order_low_pass(&acc_fiter_y,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[1]);
-	    int_second_order_low_pass(&acc_fiter_z,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[2]);
+		int_second_order_low_pass(&acc_fiter_x,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[0]);
+		int_second_order_low_pass(&acc_fiter_y,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[1]);
+		int_second_order_low_pass(&acc_fiter_z,acc_tau,1.0/sampleFreq,mpu_value_f.Accel[2]);
 	}
 	fRealAccel[0] = -mpu_value_f.Accel[1];//update_second_order_low_pass(&acc_fiter_x,mpu_value_f.Accel[0]);//s16Accel[0] / 2048.0f;
 	fRealAccel[1] = -mpu_value_f.Accel[0];//update_second_order_low_pass(&acc_fiter_y,mpu_value_f.Accel[1]);//s16Accel[1] / 2048.0f;
@@ -91,7 +91,7 @@ void Ckf_main(void)
 #elif defined USE_9AXIS_EKF
 		EKF_AHRSInit(fRealAccel, fRealMag);
 
-#endif		
+#endif
 		ulLastTime = ulNowTime;
 		u32KFState = 1;
 	}
@@ -107,7 +107,7 @@ void Ckf_main(void)
 #elif defined USE_9AXIS_EKF
 		EKF_AHRSUpdate(fRealGyro, fRealAccel,fRealMag, fDeltaTime);
 
-#endif	
+#endif
 	}
 
 #ifdef USE_SRCKF
@@ -118,17 +118,17 @@ void Ckf_main(void)
 	EKF_IMUGetQ(fQ);
 #elif defined USE_9AXIS_EKF
 	EKF_AHRSGetAngle(fRPY);
-	EKF_AHRSGetQ(fQ);	
+	EKF_AHRSGetQ(fQ);
 #endif
 //	fRPY[0]=fRPY[0]+fRealGyro[0]*fDeltaTime*180/PI;
 //	fRPY[1]=fRPY[1]+fRealGyro[1]*fDeltaTime*180/PI;
 
-    fRPY[2]=fDeltaTime*1000.0;
+	fRPY[2]=fDeltaTime*1000.0;
 	lQuat[0] = (long)(fQ[0] * 2147483648.0f);
 	lQuat[1] = (long)(fQ[1] * 2147483648.0f);
 	lQuat[2] = (long)(fQ[2] * 2147483648.0f);
 	lQuat[3] = (long)(fQ[3] * 2147483648.0f);
-	ulLastTime = ulNowTime; 
+	ulLastTime = ulNowTime;
 
 }
 

@@ -23,15 +23,15 @@
 #define ACC_FC 25.0
 #define GRO_FC 25.0
 
-typedef struct 
+typedef struct
 {
 	float x_offset;		//x偏移量
 	float y_offset;		//y偏移量
 	float z_offset;		//z偏移量
 	u16   flag;		//
-}gro_calibration;
+} gro_calibration;
 
-typedef struct 
+typedef struct
 {
 	float ax_gain;		//x缩放量
 	float ay_gain;		//y缩放量
@@ -40,13 +40,13 @@ typedef struct
 	float oy_offset;		//y偏移量
 	float oz_offset;		//z偏移量
 	u16   flag;		//
-}acc_calibration;
+} acc_calibration;
 
-typedef struct 
+typedef struct
 {
 	float o[2];		//
 	float   coef;		//
-}SencondOrderLowPass;
+} SencondOrderLowPass;
 
 extern float halfT;               // 采样周期的一半
 extern float sampleFreq;

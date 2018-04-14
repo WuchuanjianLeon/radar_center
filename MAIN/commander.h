@@ -18,22 +18,22 @@ typedef enum
 	USE_USART3,
 	USE_USART4,
 	USE_USART5,
-}USE_USART_SELECTION;
+} USE_USART_SELECTION;
 typedef struct
-{   
+{
 	u32 stid;
 	u32 etid;
-    u8 len;
+	u8 len;
 	unsigned char data_buff[8];//can总线待发原始数据包缓存
-}CAN_SEND_DATA;
+} CAN_SEND_DATA;
 typedef struct
-{   
+{
 	u32 stid;
 	u32 etid;
-    u16 len;
+	u16 len;
 	u8 status;
 	unsigned char data_buff[8];//can总线待发原始数据包缓存
-}CAN_REC_DATA;
+} CAN_REC_DATA;
 
 
 
@@ -42,19 +42,19 @@ typedef struct
 	unsigned char data_buff[3];//雷达原始数据缓存
 	float dis;		//if true接收完标志
 	float angle;
-}RADAR_OA_DATA;
+} RADAR_OA_DATA;
 
 typedef struct
 {
 	unsigned char data_buff[2];//雷达原始数据缓存
 	float dis;		//if true接收完标志
-}RADAR_TF_DATA; //Terrain following
+} RADAR_TF_DATA; //Terrain following
 
 typedef struct
 {
 	u16 pwm;
 	float theta;
-}OA_DATA;
+} OA_DATA;
 
 
 extern CAN_SEND_DATA can_send_oa_data;

@@ -5,7 +5,8 @@
 
 
 typedef union
-{	 struct
+{
+	struct
 	{
 		unsigned bit0    :1;
 		unsigned bit1    :1;
@@ -15,15 +16,15 @@ typedef union
 		unsigned bit5    :1;
 		unsigned bit6    :1;
 		unsigned bit7    :1;
-	}ONEBITS;
-	unsigned char BYTE;	
-}Stm32Byte;
+	} ONEBITS;
+	unsigned char BYTE;
+} Stm32Byte;
 
 typedef union
 {
 	short int value;  //注意:操作系统不一致 会导致value不同   所以需要用sizeof测试一下
 	unsigned char bytes[2];
-}int16andUint8_t;
+} int16andUint8_t;
 
 typedef union
 {
@@ -33,9 +34,9 @@ typedef union
 		char Byte1;
 		char Byte2;
 		char Byte3;
-	}Byte4;
+	} Byte4;
 	long Stm32Long;
-}Stm32Long;
+} Stm32Long;
 
 
 

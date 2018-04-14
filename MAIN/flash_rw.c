@@ -44,21 +44,21 @@ int ReadFlashNBtye(uint32_t ReadAddress, uint8_t *ReadBuf, int32_t ReadNum)
 
 {
 
-int DataNum = 0;
+	int DataNum = 0;
 
-ReadAddress = (uint32_t)STARTADDR + ReadAddress;
+	ReadAddress = (uint32_t)STARTADDR + ReadAddress;
 
-while(DataNum < ReadNum)
+	while(DataNum < ReadNum)
 
-{
+	{
 
-*(ReadBuf + DataNum) = *(__IO uint8_t*) ReadAddress++;
+		*(ReadBuf + DataNum) = *(__IO uint8_t*) ReadAddress++;
 
-DataNum++;
+		DataNum++;
 
-}
+	}
 
-return DataNum;
+	return DataNum;
 
 }
 
@@ -85,48 +85,48 @@ return DataNum;
 u8 WriteFlashOneWord(uint32_t SWriteAddress,uint32_t EWriteAddress,uint32_t *WriteData)
 
 {
-uint32_t i=0,j=0; 
-int32_t ReadNum=100;
-uint8_t  ReadBuf[100];
-uint32_t  Read_word_Buf[25];
+	uint32_t i=0,j=0;
+	int32_t ReadNum=100;
+	uint8_t  ReadBuf[100];
+	uint32_t  Read_word_Buf[25];
 
-ReadNum=ReadFlashNBtye(0,ReadBuf,ReadNum);
-for(i=0;i<=(ReadNum-4);i+=4)
-{
- Read_word_Buf[j]=(ReadBuf[i+3]<<24)+(ReadBuf[i+2]<<16)+(ReadBuf[i+1]<<8)+ReadBuf[i];
- j++;
-}
-for(j=SWriteAddress;j<=EWriteAddress;j++)
-{
- Read_word_Buf[j]=WriteData[j-SWriteAddress];
-}
+	ReadNum=ReadFlashNBtye(0,ReadBuf,ReadNum);
+	for(i=0; i<=(ReadNum-4); i+=4)
+	{
+		Read_word_Buf[j]=(ReadBuf[i+3]<<24)+(ReadBuf[i+2]<<16)+(ReadBuf[i+1]<<8)+ReadBuf[i];
+		j++;
+	}
+	for(j=SWriteAddress; j<=EWriteAddress; j++)
+	{
+		Read_word_Buf[j]=WriteData[j-SWriteAddress];
+	}
 
-FLASH_UnlockBank1();
+	FLASH_UnlockBank1();
 
-FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
+	FLASH_ClearFlag(FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
 
-FLASHStatus = FLASH_ErasePage(STARTADDR);
-for(i=0;i<25;i++)
-{
-  if(FLASHStatus == FLASH_COMPLETE)
+	FLASHStatus = FLASH_ErasePage(STARTADDR);
+	for(i=0; i<25; i++)
+	{
+		if(FLASHStatus == FLASH_COMPLETE)
 
-   {
+		{
 
-    FLASHStatus = FLASH_ProgramWord(STARTADDR + 4*i, Read_word_Buf[i]); //flash.c 中API函数
+			FLASHStatus = FLASH_ProgramWord(STARTADDR + 4*i, Read_word_Buf[i]); //flash.c 中API函数
 
-    //FLASHStatus = FLASH_ProgramWord(StartAddress+4, 0x56780000); //需要写入更多数据时开启
+			//FLASHStatus = FLASH_ProgramWord(StartAddress+4, 0x56780000); //需要写入更多数据时开启
 
-   //FLASHStatus = FLASH_ProgramWord(StartAddress+8, 0x87650000); //需要写入更多数据时开启
+			//FLASHStatus = FLASH_ProgramWord(StartAddress+8, 0x87650000); //需要写入更多数据时开启
 
-   }
-  else
-  	{ 
-  	 FLASH_LockBank1();
-	 return 1;
-  	}
-}
-FLASH_LockBank1();
-return 0;
+		}
+		else
+		{
+			FLASH_LockBank1();
+			return 1;
+		}
+	}
+	FLASH_LockBank1();
+	return 0;
 
 
 }

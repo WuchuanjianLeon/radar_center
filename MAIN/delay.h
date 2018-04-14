@@ -1,6 +1,6 @@
 #ifndef __DELAY_H
-#define __DELAY_H 			   
-#include "stm32f10x.h" 
+#define __DELAY_H
+#include "stm32f10x.h"
 
 #define FALSE 0
 #define TRUE  1
@@ -26,11 +26,11 @@
 #define CYCCNTENA   (1 << 0)
 
 typedef union
-{ 
+{
 	unsigned char time_all;
-  struct
+	struct
 	{
-	    unsigned flag_1000hz;
+		unsigned flag_1000hz;
 		unsigned flag_500hz;
 		unsigned flag_200hz;
 		unsigned flag_200_1hz;
@@ -43,8 +43,8 @@ typedef union
 		unsigned flag_2hz;
 		unsigned flag_1hz;
 		unsigned flag_0_5hz;
-	}time_sub;
-}time_flag;
+	} time_sub;
+} time_flag;
 
 extern time_flag TIME_FLAG;
 

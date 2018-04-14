@@ -16,14 +16,14 @@
 
 typedef struct
 {
-	int usart_len;		//接收长度 
-	int rx_len;		//接收长度 
+	int usart_len;		//接收长度
+	int rx_len;		//接收长度
 	unsigned char rx_buff[RX_BUFF_LEN];//接收数据缓存
 	unsigned char usart_buff[USART_BUFF_LEN];//接收数据缓存
 	u16 status;		//if true接收完标志
 
 	u8 roll_cnt;
-}usart_message;
+} usart_message;
 
 extern usart_message USART1_MESSAGE;
 extern usart_message USART2_MESSAGE;
@@ -48,4 +48,4 @@ extern float Frequency[6];
 
 void Query_uart(USART_TypeDef* USARTx,unsigned char usart_X);
 
-#endif 
+#endif

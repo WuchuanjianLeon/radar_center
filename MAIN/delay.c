@@ -58,70 +58,70 @@ void SysTick_Handler(void)
 		TIME_FLAG.time_sub.flag_0_5hz=TRUE;
 	}
 
-   	sysTickUptime++;
+	sysTickUptime++;
 	frameCounter++;
-    if (frameCounter > FRAME_COUNT)
-    {
-    	frameCounter = 1;
-	}	
+	if (frameCounter > FRAME_COUNT)
+	{
+		frameCounter = 1;
+	}
 }
 uint32_t micros(void)
 {
-    register uint32_t oldCycle, cycle, timeMs;
+	register uint32_t oldCycle, cycle, timeMs;
 
-    do
-    {
-        timeMs = __LDREXW(&sysTickUptime);
-        cycle = *DWT_CYCCNT;
-        oldCycle = sysTickCycleCounter;
-    }
-    while (__STREXW(timeMs , &sysTickUptime));
+	do
+	{
+		timeMs = __LDREXW(&sysTickUptime);
+		cycle = *DWT_CYCCNT;
+		oldCycle = sysTickCycleCounter;
+	}
+	while (__STREXW(timeMs , &sysTickUptime));
 
-    return (timeMs * 1000) + (cycle - oldCycle) / usTicks;
+	return (timeMs * 1000) + (cycle - oldCycle) / usTicks;
 }
 
 uint32_t millis(void)
 {
-    return sysTickUptime;
+	return sysTickUptime;
 }
 void cycleCounterInit(void)
 {
-    RCC_ClocksTypeDef clocks;
-    RCC_GetClocksFreq(&clocks);
-    usTicks = clocks.SYSCLK_Frequency / 1000000;
+	RCC_ClocksTypeDef clocks;
+	RCC_GetClocksFreq(&clocks);
+	usTicks = clocks.SYSCLK_Frequency / 1000000;
 
-    // enable DWT access
-    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-    // enable the CPU cycle counter
-    DWT_CTRL |= CYCCNTENA;
+	// enable DWT access
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	// enable the CPU cycle counter
+	DWT_CTRL |= CYCCNTENA;
 }
 
 void delayMicroseconds(uint32_t us)
 {
-    uint32_t elapsed = 0;
-    uint32_t lastCount = *DWT_CYCCNT;
-    IWDG_Feed();
-    for (;;)
-    {
-        register uint32_t current_count = *DWT_CYCCNT;
-        uint32_t elapsed_us;
+	uint32_t elapsed = 0;
+	uint32_t lastCount = *DWT_CYCCNT;
+	IWDG_Feed();
+	for (;;)
+	{
+		register uint32_t current_count = *DWT_CYCCNT;
+		uint32_t elapsed_us;
 
-        // measure the time elapsed since the last time we checked
-        elapsed += current_count - lastCount;
-        lastCount = current_count;
+		// measure the time elapsed since the last time we checked
+		elapsed += current_count - lastCount;
+		lastCount = current_count;
 
-        // convert to microseconds
-        elapsed_us = elapsed / usTicks;
+		// convert to microseconds
+		elapsed_us = elapsed / usTicks;
 
-        if (elapsed_us >= us)
-            break;
+		if (elapsed_us >= us)
+			break;
 
-        // reduce the delay by the elapsed time
-        us -= elapsed_us;
+		// reduce the delay by the elapsed time
+		us -= elapsed_us;
 
-        // keep fractional microseconds for the next iteration
-        elapsed %= usTicks;
-    }
+		// keep fractional microseconds for the next iteration
+		elapsed %= usTicks;
+	}
 }
 int Get_Ms(unsigned long *count)
 {
@@ -135,8 +135,8 @@ int Get_Ms(unsigned long *count)
 
 void delay(uint32_t ms)
 {
-    while (ms--)
-        delayMicroseconds(1000);
+	while (ms--)
+		delayMicroseconds(1000);
 }
 void delay_nor(u16 time)
 {

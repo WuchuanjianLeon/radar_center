@@ -6,7 +6,7 @@ typedef enum
 	bat_normal=1,
 	bat_abnormal,
 	bat_lowpower,
-}bat_flag;
+} bat_flag;
 
 
 #define AD_CH0 0

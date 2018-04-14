@@ -7,19 +7,19 @@
 #define AIRC_CAN_ID 0x000E
 #define RADAR_CAN_ID 0x000F
 
-typedef struct 
+typedef struct
 {
 	u8 ucFixed0;  //
 	u8 ucFixed1;
 	u16 ucLength;
 	u8 ucFrameSequence;
-}ST_Can_MSGHeader_Type;
-typedef struct 
+} ST_Can_MSGHeader_Type;
+typedef struct
 {
 	u8 ucFrameID;
 	u8 ucMsgID;
 	u8 ucData[MSG_DATA_NUM];
-}ST_Can_MSGInfo_Type;
+} ST_Can_MSGInfo_Type;
 
 typedef struct
 {
@@ -28,7 +28,7 @@ typedef struct
 	u8 Over;
 	u8 fr_flag;
 	u8 time;
-}ST_Can_MSG_STATE_Type;
+} ST_Can_MSG_STATE_Type;
 typedef struct
 {
 	ST_Can_MSGHeader_Type Can_MsgHeader;
@@ -36,21 +36,21 @@ typedef struct
 	u32 Time_Stamp;
 	ST_Can_MSGInfo_Type Can_MsgInfo;
 	u8 Can_Checksum;
-}ST_Can_MSG_Type;
-typedef struct 
+} ST_Can_MSG_Type;
+typedef struct
 {
 	u8 Size;
 	u8 FrameID;
 	u8 MsgID;
 	u8 Data[MSG_DATA_NUM];
-}ST_Can_MSGData_Type;
+} ST_Can_MSGData_Type;
 typedef enum
 {
 	MSGHeader,
 	MSGLoad1,
 	MSGLoad2,
 	MSGLoad3
-}Can_PROCESS_STATUS_Type;
+} Can_PROCESS_STATUS_Type;
 
 
 extern ST_Can_MSG_STATE_Type Can_Msg_Send;
