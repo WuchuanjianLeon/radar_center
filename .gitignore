@@ -1,9 +1,7 @@
 # ignore html dir for github pages
-/SI
-/OBJ
-/PROJECT
+/SI/*.*
+/OBJ/*.*
+/PROJECT/*.*
 
-*.o
+/LIS/*.map
 
-/LIS
-*.map

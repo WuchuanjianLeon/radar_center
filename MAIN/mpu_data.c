@@ -39,6 +39,7 @@ void int_second_order_low_pass(SencondOrderLowPass* fiter,float tau,float sample
 	fiter->coef = 1.0/tau*sample_time;
 	if(fiter->coef > 1.0)fiter->coef = 0;
 	fiter->o[0] = value;
+
 }
 float update_second_order_low_pass(SencondOrderLowPass* fiter,float value)
 {
